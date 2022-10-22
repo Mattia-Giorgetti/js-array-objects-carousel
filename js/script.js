@@ -2,33 +2,82 @@
 
 // Funzioni 
 
-function createRow(){
-    const row = document.createElement('div');
-    row.classList.add('row');
-    for(let i = 0; i < images.length; i++){
-        const pic = images[i];
-        const col = createCol(pic);
-        row.appendChild(col);
-    }
-    myWrapper.appendChild(row);
+function slider(){
+    let activeSlide = 0;
+    
+    const mySlide = document.querySelectorAll('.slide');
+    mySlide[activeSlide].classList.toggle('d-none');
+  
+    // let maxShift = mySlide.length - 1;
+
+    nextButton.addEventListener('click', function forward(){
+        mySlide[activeSlide].classList.toggle('d-none');
+        activeSlide++;
+        mySlide[activeSlide].classList.toggle('d-none');
+    });
+
+    prevButton.addEventListener('click', function backward(){
+        mySlide[activeSlide].classList.toggle('d-none');
+        activeSlide--;
+        mySlide[activeSlide].classList.toggle('d-none');
+    });
+}    
+
+function trackSlider (){
+
+    let activeImg = 0;
+    const myPic = document.querySelectorAll('.square');
+    myPic[activeImg].classList.toggle('selected_pic');
+
+    nextButton.addEventListener('click', function nextPic (){
+        myPic[activeImg].classList.toggle('selected_pic');
+        activeImg++;
+        myPic[activeImg].classList.toggle('selected_pic');
+    })
+
+    prevButton.addEventListener('click', function previousPic (){
+        myPic[activeImg].classList.toggle('selected_pic');
+        activeImg--;
+        myPic[activeImg].classList.toggle('selected_pic');
+    })
 }
 
-function createCol(){
-    const col = document.createElement('div');
-    col.classList.add('col-12');
-    const colTemplate = `
-    <div>
-    <img src="${images.url}">
-    </div>
-    `;
-    col.innerHTML = colTemplate;
-    return col;
+function creaSlide(){
+    images.forEach((obj) => {
+        let cardSlide = document.createElement('div');
+        cardSlide.classList.add('slide', 'position-relative', 'd-none');
+        let templateHTML = `
+        <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
+        <h2 class="position-absolute top-0 end-0 pe-4 text-white pt-4">${obj.title}</h2>
+        <p class="my_par p-4 text-white ">${obj.description}</p>      
+        `;
+        cardSlide.innerHTML = templateHTML;
+        myWrapper.append(cardSlide);
+
+        slider();
+    });
 }
+function creaTracker(){
+    images.forEach((obj) => {
+        let cardsquare = document.createElement('div');
+        cardsquare.classList.add('square','col','selected_pic');
+        let templateHTML = `
+        <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
+        `;
+        cardsquare.innerHTML = templateHTML;
+        imgTracker.append(cardsquare);
+
+        trackSlider();
+    });
+}
+
+
 
 // Variabili globali
 const prevButton = document.getElementById('prev_btn');
 const nextButton = document.getElementById('next_btn');
 const myWrapper = document.getElementById('wrapper');
+const imgTracker = document.getElementById('img_tracker');
 const images = [
     {
         url: 'http://www.viaggiareonline.it/wp-content/uploads/2014/11/sweden_148857365.jpg',
@@ -58,5 +107,7 @@ const images = [
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam.'
     },
 ];
+creaSlide();
+creaTracker();
 
-createRow();
+
