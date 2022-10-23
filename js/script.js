@@ -1,6 +1,8 @@
 "use strict";
 
-// Funzioni 
+// FUNZIONI //
+
+// Funzione che genera lo slide della card principale 
 
 function slider(){
     let activeSlide = 0;
@@ -8,44 +10,82 @@ function slider(){
     const mySlide = document.querySelectorAll('.slide');
     mySlide[activeSlide].classList.toggle('d-none');
   
-    // let maxShift = mySlide.length - 1;
+    let maxShift = images.length - 1;
+    
+    // Funzione che muove in avanti al click (card principale)
 
     nextButton.addEventListener('click', function forward(){
-        mySlide[activeSlide].classList.toggle('d-none');
-        activeSlide++;
-        mySlide[activeSlide].classList.toggle('d-none');
+        
+        if(activeSlide !== maxShift){
+            mySlide[activeSlide].classList.toggle('d-none');
+            activeSlide++;
+            mySlide[activeSlide].classList.toggle('d-none');
+        } else {
+            mySlide[activeSlide].classList.toggle('d-none');
+            activeSlide = 0;
+            mySlide[activeSlide].classList.toggle('d-none');
+         }
     });
 
+    // Funzione che muove indietro al click (card principale)
+
     prevButton.addEventListener('click', function backward(){
-        mySlide[activeSlide].classList.toggle('d-none');
-        activeSlide--;
-        mySlide[activeSlide].classList.toggle('d-none');
+        if(activeSlide !== 0){
+            mySlide[activeSlide].classList.toggle('d-none');
+            activeSlide--;
+            mySlide[activeSlide].classList.toggle('d-none');
+        } else {
+            mySlide[activeSlide].classList.toggle('d-none');
+            activeSlide = maxShift;
+            mySlide[activeSlide].classList.toggle('d-none');
+        }
     });
 }    
+
+// Funzione che genera lo slide delle miniature 
 
 function trackSlider (){
 
     let activeImg = 0;
     const myPic = document.querySelectorAll('.square');
-    myPic[activeImg].classList.toggle('selected_pic');
+    myPic[activeImg].classList.toggle('unselected_pic');
+    let maxShift = images.length - 1;
+
+    // Funzione che muove in avanti al click (miniature)
 
     nextButton.addEventListener('click', function nextPic (){
-        myPic[activeImg].classList.toggle('selected_pic');
-        activeImg++;
-        myPic[activeImg].classList.toggle('selected_pic');
-    })
+        if(activeImg !== maxShift) {
+            myPic[activeImg].classList.toggle('unselected_pic');
+            activeImg++;
+            myPic[activeImg].classList.toggle('unselected_pic');
+        } else {
+            myPic[activeImg].classList.toggle('unselected_pic');
+            activeImg = 0;
+            myPic[activeImg].classList.toggle('unselected_pic');
+        }
+    });
+
+    // Funzione che muove indietro al click (miniature)
 
     prevButton.addEventListener('click', function previousPic (){
-        myPic[activeImg].classList.toggle('selected_pic');
-        activeImg--;
-        myPic[activeImg].classList.toggle('selected_pic');
+        if(activeImg !== 0){
+            myPic[activeImg].classList.toggle('unselected_pic');
+            activeImg--;
+            myPic[activeImg].classList.toggle('unselected_pic');
+        } else {
+            myPic[activeImg].classList.toggle('unselected_pic');
+            activeImg = maxShift;
+            myPic[activeImg].classList.toggle('unselected_pic');
+        }
     })
 }
+
+// Funzione che crea dinamicamente il div con la card principale 
 
 function creaSlide(){
     images.forEach((obj) => {
         let cardSlide = document.createElement('div');
-        cardSlide.classList.add('slide', 'position-relative', 'd-none');
+        cardSlide.classList.add('slide', 'd-none');
         let templateHTML = `
         <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
         <h2 class="position-absolute top-0 end-0 pe-4 text-white pt-4">${obj.title}</h2>
@@ -57,10 +97,13 @@ function creaSlide(){
         slider();
     });
 }
+
+// Funzione che crea dinamicamente il div con le miniature
+
 function creaTracker(){
     images.forEach((obj) => {
         let cardsquare = document.createElement('div');
-        cardsquare.classList.add('square','col','selected_pic');
+        cardsquare.classList.add('square','col','unselected_pic');
         let templateHTML = `
         <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
         `;
@@ -107,7 +150,9 @@ const images = [
         description: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit. Et temporibus voluptatum suscipit tempore aliquid deleniti aut veniam.'
     },
 ];
+
+// lancio le funzioni 
+
 creaSlide();
 creaTracker();
-
 
