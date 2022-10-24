@@ -6,10 +6,10 @@
 
 function slider(){
     let activeSlide = 0;
-    
+
     const mySlide = document.querySelectorAll('.slide');
     mySlide[activeSlide].classList.toggle('d-none');
-  
+    
     let maxShift = images.length - 1;
     
     // Funzione che muove in avanti al click (card principale)
@@ -87,13 +87,13 @@ function creaSlide(){
         let cardSlide = document.createElement('div');
         cardSlide.classList.add('slide', 'd-none');
         let templateHTML = `
-        <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
+        <img src="${obj.url}" alt="${obj.title}" />
         <h2 class="position-absolute top-0 end-0 pe-4 text-white pt-4">${obj.title}</h2>
-        <p class="my_par p-4 text-white ">${obj.description}</p>      
+        <p class="my_par p-4 text-white ">${obj.description}</p>
         `;
         cardSlide.innerHTML = templateHTML;
         myWrapper.append(cardSlide);
-
+        
         slider();
     });
 }
@@ -105,7 +105,7 @@ function creaTracker(){
         let cardsquare = document.createElement('div');
         cardsquare.classList.add('square','col','unselected_pic');
         let templateHTML = `
-        <img class="img-fluid" src="${obj.url}" alt="${obj.title}" />
+        <img src="${obj.url}" alt="${obj.title}" />
         `;
         cardsquare.innerHTML = templateHTML;
         imgTracker.append(cardsquare);
