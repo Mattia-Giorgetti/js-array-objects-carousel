@@ -11,6 +11,7 @@ function slider(){
     mySlide[activeSlide].classList.toggle('d-none');
     
     let maxShift = images.length - 1;
+   
     
     // Funzione che muove in avanti al click (card principale)
 
@@ -93,9 +94,8 @@ function creaSlide(){
         `;
         cardSlide.innerHTML = templateHTML;
         myWrapper.append(cardSlide);
-        
-        slider();
     });
+    slider();
 }
 
 // Funzione che crea dinamicamente il div con le miniature
@@ -109,9 +109,8 @@ function creaTracker(){
         `;
         cardsquare.innerHTML = templateHTML;
         imgTracker.append(cardsquare);
-
-        trackSlider();
     });
+    trackSlider();
 }
 
 
